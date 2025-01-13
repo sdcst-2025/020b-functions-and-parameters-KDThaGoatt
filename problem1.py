@@ -10,8 +10,15 @@ assert hypotenuse(3,4,True) == 5
 (2 points)
 """
 
-def hypotenuse():
-    return
+import math
+
+def hypotenuse(a,b,bool):
+    if bool == True:
+        return math.sqrt(a**2 + b**2)
+    if bool == False:
+        x = min(a,b)
+        y = max(a,b)
+        return math.sqrt(y**2 - x**2)
 
 if __name__ == "__main__":
     assert hypotenuse(3,4,True) == 5
