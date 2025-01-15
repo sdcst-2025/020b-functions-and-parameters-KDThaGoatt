@@ -34,6 +34,8 @@ If there are two solutions:
 output is: "The solutions are x=?? and x=??"
 """
 
+import math
+
 def numSolutions(a,b,c):
     # inputs:
     # float a
@@ -42,7 +44,13 @@ def numSolutions(a,b,c):
     # Description:
     #
     # return 0, 1 or 2
-    return 
+
+    if (b**2 - 4 * a * c) < 0:
+        return 0
+    if (b**2 - 4 * a * c) == 0:
+        return 1
+    if (b**2 - 4 * a * c) > 0:
+        return 2
 
 def solutions(a,b,c):
     #inputs:
@@ -52,7 +60,33 @@ def solutions(a,b,c):
     # Desription:
     #
     # return tuple of float solution1 and float solution2
-    return
+
+    perfSquare = False
+
+    if math.sqrt(a) % 1 == 0 and math.sqrt(b) % 1 == 0 and math.sqrt(c) % 1 == 0:
+        perfSquare = True
+
+    if numSolutions == 0:
+        return ("There are no solutions")
+    
+    if numSolutions == 1 and perfSquare == False:
+        try:
+            solution1 = (-b + math.sqrt(b^2 - 4 * a * c)) / 2 * a
+            return solution1
+        except:
+            solution2 = (-b - math.sqrt(b^2 - 4 * a * c)) / 2 * a
+            return solution2
+        
+    if numSolutions == 2 and perfSquare == False:
+        solution1 = (-b + math.sqrt(b^2 - 4 * a * c)) / 2 * a
+        solution2 = (-b - math.sqrt(b^2 - 4 * a * c)) / 2 * a
+        return (solution1, solution2)
+    
+    if numSolutions != 0 and perfSquare == True:
+        b = b/2
+        try:
+            solution1 = (f"({a} + {b})^2")
+        except:
 
 def title():
     # inputs none
