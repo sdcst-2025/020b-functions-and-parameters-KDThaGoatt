@@ -36,6 +36,8 @@ output is: "The solutions are x=?? and x=??"
 
 import math
 
+perfSquare = False
+
 def numSolutions(a,b,c):
     # inputs:
     # float a
@@ -51,6 +53,10 @@ def numSolutions(a,b,c):
         return 1
     if (b**2 - 4 * a * c) > 0:
         return 2
+    
+def square(a,b,c):
+    if math.sqrt(b**2 - 4 * a * c) % 1 == 0:
+        return True
 
 def solutions(a,b,c):
     #inputs:
@@ -61,32 +67,39 @@ def solutions(a,b,c):
     #
     # return tuple of float solution1 and float solution2
 
-    perfSquare = False
-
-    if math.sqrt(a) % 1 == 0 and math.sqrt(b) % 1 == 0 and math.sqrt(c) % 1 == 0:
-        perfSquare = True
 
     if numSolutions == 0:
         return ("There are no solutions")
     
-    if numSolutions == 1 and perfSquare == False:
+    if numSolutions == 1 and square == False:
         try:
-            solution1 = (-b + math.sqrt(b^2 - 4 * a * c)) / 2 * a
+            solution1 = (-b + math.sqrt(b**2 - 4 * a * c)) / 2 * a
             return solution1
         except:
-            solution2 = (-b - math.sqrt(b^2 - 4 * a * c)) / 2 * a
+            solution2 = (-b - math.sqrt(b**2 - 4 * a * c)) / 2 * a
             return solution2
         
-    if numSolutions == 2 and perfSquare == False:
-        solution1 = (-b + math.sqrt(b^2 - 4 * a * c)) / 2 * a
-        solution2 = (-b - math.sqrt(b^2 - 4 * a * c)) / 2 * a
+    if numSolutions == 2 and square == False:
+        solution1 = (-b + math.sqrt(b**2 - 4 * a * c)) / 2 * a
+        solution2 = (-b - math.sqrt(b**2 - 4 * a * c)) / 2 * a
         return (solution1, solution2)
     
-    if numSolutions != 0 and perfSquare == True:
-        b = b/2
-        try:
-            solution1 = (f"({a} + {b})^2")
-        except:
+    if numSolutions != 0 and square == True:
+        x = a*c
+        if x > 0:
+            for i in range(-x-1,x+1):
+                if i != 0:
+                    n = x / i
+                    if n + i == b:
+                        print(i,n)
+        else:
+            for i in range(x-1,-x+1):
+                if i != 0:
+                    n = x / i
+                    if n + i == b:
+                        print(i,n)
+                
+
 
 def title():
     # inputs none
