@@ -55,8 +55,12 @@ def numSolutions(a,b,c):
         return 2
     
 def square(a,b,c):
-    if math.sqrt(b**2 - 4 * a * c) % 1 == 0:
-        return True
+    try:
+        sq = math.sqrt(b**2 - 4 * a * c)
+        if sq % 1 == 0:
+            return True
+    except:
+        return False
 
 def solutions(a,b,c):
     #inputs:
@@ -68,10 +72,10 @@ def solutions(a,b,c):
     # return tuple of float solution1 and float solution2
 
 
-    if numSolutions == 0:
+    if numSolutions(a,b,c) == 0:
         return ("There are no solutions")
     
-    if numSolutions == 1 and square == False:
+    if numSolutions(a,b,c) == 1 and square(a,b,c) == False:
         try:
             solution1 = (-b + math.sqrt(b**2 - 4 * a * c)) / 2 * a
             return solution1
@@ -79,39 +83,70 @@ def solutions(a,b,c):
             solution2 = (-b - math.sqrt(b**2 - 4 * a * c)) / 2 * a
             return solution2
         
-    if numSolutions == 2 and square == False:
+    if numSolutions(a,b,c) == 2 and square(a,b,c) == False:
         solution1 = (-b + math.sqrt(b**2 - 4 * a * c)) / 2 * a
         solution2 = (-b - math.sqrt(b**2 - 4 * a * c)) / 2 * a
         return (solution1, solution2)
     
-    if numSolutions != 0 and square == True:
+    if numSolutions(a,b,c) != 0 and square(a,b,c) == True:
         x = a*c
+        print(x)
+
         if x > 0:
-            for i in range(-x-1,x+1):
+            li = []
+            begin = -x-1
+            end = x + 1
+            #print(begin,end)
+            for i in range(begin,end):
+                #print(i)
                 if i != 0:
                     n = x / i
+                    #print(x,i,n)
                     if n + i == b:
-                        print(i,n)
+                        li.insert(i, n)
+                #print(li)
+            solution1 = (a+li[0])/a
+            if solution1 > 0:
+                return (f"x + {solution1}")
+            if solution1 == 0:
+                return ("x")
+            if solution1 < 0:
+                return (f"x - {solution1}")
+            solution2 = (a+li[1])/a
+            if solution2 > 0:
+                return (f"x + {solution2}")
+            if solution2 == 0:
+                return ("x")
+            if solution2 < 0:
+                return (f"x - {solution2}")
+                
         else:
+            li = []
             for i in range(x-1,-x+1):
                 if i != 0:
                     n = x / i
                     if n + i == b:
-                        print(i,n)
+                        return (i,n)
                 
 
 
 def title():
     # inputs none
     # return str of All the title and instructions on one line
-    return
+    return "This program solves quadratic equations by the quadratic formula and if the discriminant is a perfect square, it will factor it. Input your three numbers for A, B, and C."
 
 
 def main():
     # Display Title and Instructions
     print( title() )
     # Your code and function calls should go here
+    a = int(input("Enter the value for A: "))
+    b = int(input("Enter the value for B: "))
+    c = int(input("Enter the value for C: "))
+    answer = solutions(a,b,c)
+    return answer
 
+a = main()
+print(a)
 
-
-main()
+# PRINT OUT DATA ALONG THE SOLVING PROCESS TO CONFIRM IT, VALUES 12,54,23
