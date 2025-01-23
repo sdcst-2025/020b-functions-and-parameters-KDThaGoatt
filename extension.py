@@ -46,19 +46,23 @@ def numSolutions(a,b,c):
     # Description:
     #
     # return 0, 1 or 2
+    
+    discriminant = b**2 - 4 * a * c
 
-    if (b**2 - 4 * a * c) < 0:
+    if discriminant < 0:
         return 0
-    if (b**2 - 4 * a * c) == 0:
+    elif discriminant == 0:
         return 1
-    if (b**2 - 4 * a * c) > 0:
+    else:
         return 2
     
 def square(a,b,c):
     try:
         sq = math.sqrt(b**2 - 4 * a * c)
-        if sq % 1 == 0:
+        if sq.is_integer():
             return True
+        if sq.is_integer(False):
+            return False
     except:
         return False
 
@@ -71,26 +75,33 @@ def solutions(a,b,c):
     #
     # return tuple of float solution1 and float solution2
 
+    num_sol = numSolutions(a,b,c)
 
-    if numSolutions(a,b,c) == 0:
+    discriminant = b**2 - 4 * a * c
+
+    if num_sol == 0:
+        #print("POS 1")
         return ("There are no solutions")
     
-    if numSolutions(a,b,c) == 1 and square(a,b,c) == False:
+    if num_sol == 1 and square(a,b,c) == False:
         try:
-            solution1 = (-b + math.sqrt(b**2 - 4 * a * c)) / 2 * a
+            solution1 = (-b + math.sqrt(discriminant)) / (2 * a)
+            #print("POS 2")
             return solution1
         except:
-            solution2 = (-b - math.sqrt(b**2 - 4 * a * c)) / 2 * a
+            solution2 = (-b - math.sqrt(discriminant)) / (2 * a)
+            #print("POS 3")
             return solution2
         
-    if numSolutions(a,b,c) == 2 and square(a,b,c) == False:
-        solution1 = (-b + math.sqrt(b**2 - 4 * a * c)) / 2 * a
-        solution2 = (-b - math.sqrt(b**2 - 4 * a * c)) / 2 * a
+    if num_sol == 2 and square(a,b,c) == False:
+        solution1 = (-b + math.sqrt(discriminant)) / (2 * a)
+        solution2 = (-b - math.sqrt(discriminant)) / (2 * a)
+        #print("POS 4")
         return (solution1, solution2)
     
-    if numSolutions(a,b,c) != 0 and square(a,b,c) == True:
+    if num_sol != 0 and square(a,b,c) == True:
         x = a*c
-        print(x)
+        #print("POS 5")
 
         if x > 0:
             li = []
@@ -104,28 +115,58 @@ def solutions(a,b,c):
                     #print(x,i,n)
                     if n + i == b:
                         li.insert(i, n)
+                        #print(li)
+                        #print("POS 14")
                 #print(li)
-            solution1 = (a+li[0])/a
-            if solution1 > 0:
-                return (f"x + {solution1}")
-            if solution1 == 0:
-                return ("x")
-            if solution1 < 0:
-                return (f"x - {solution1}")
-            solution2 = (a+li[1])/a
-            if solution2 > 0:
-                return (f"x + {solution2}")
-            if solution2 == 0:
-                return ("x")
-            if solution2 < 0:
-                return (f"x - {solution2}")
+                #FIND AMOUNT OF NUMBERS IN THE LIST
+
+            if len(li) == 2:
+
+                factors = []
+                solution1 = (li[0])/a
+                if solution1 > 0:
+                    #print("POS 6")
+                    factors.append(f"x + {solution1}")
+                elif solution1 == 0:
+                    #print("POS 7")
+                    factors.append("x")
+                elif solution1 < 0:
+                    #print("POS 8")
+                    factors.append(f"x - {solution1}")
+                solution2 = (li[1])/a
+                if solution2 > 0:
+                    #print("POS 9")
+                    factors.append(f"x + {solution2}")
+                elif solution2 == 0:
+                    #print("POS 10")
+                    factors.append("x")
+                else:
+                    #print("POS 11")
+                    factors.append(f"x - {solution2}")
                 
+                return(factors)
+                
+            else:
+                factors = []
+                solution1 = ((li[0])/a)
+                if solution1 > 0:
+                    #print("POS 15")
+                    return(f"x + {solution1}")
+                elif solution1 == 0:
+                    #print("POS 16")
+                    return("x")
+                elif solution1 < 0:
+                    #print("POS 17")
+                    return(f"x - {solution1}")
+
         else:
+            #print("POS 12")
             li = []
-            for i in range(x-1,-x+1):
+            for i in range(begin, end):
                 if i != 0:
                     n = x / i
                     if n + i == b:
+                        #print("POS 13")
                         return (i,n)
                 
 
@@ -146,7 +187,6 @@ def main():
     answer = solutions(a,b,c)
     return answer
 
-a = main()
-print(a)
+print( main() )
 
 # PRINT OUT DATA ALONG THE SOLVING PROCESS TO CONFIRM IT, VALUES 12,54,23
