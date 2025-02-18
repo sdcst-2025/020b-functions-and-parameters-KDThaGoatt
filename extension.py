@@ -130,8 +130,9 @@ def solutions(a,b,c):
                 elif solution1 == 0:
                     #print("POS 7")
                     factors.append("x")
-                elif solution1 < 0:
+                else:
                     #print("POS 8")
+                    solution1 = solution1 * -1
                     factors.append(f"x - {solution1}")
                 solution2 = (li[1])/a
                 if solution2 > 0:
@@ -142,6 +143,7 @@ def solutions(a,b,c):
                     factors.append("x")
                 else:
                     #print("POS 11")
+                    solution2 = solution2 * -1
                     factors.append(f"x - {solution2}")
                 
                 return(factors)
@@ -155,19 +157,36 @@ def solutions(a,b,c):
                 elif solution1 == 0:
                     #print("POS 16")
                     return("x")
-                elif solution1 < 0:
+                else:
                     #print("POS 17")
+                    solution1 = solution1 * -1
                     return(f"x - {solution1}")
 
         else:
             #print("POS 12")
+            x = a*c
             li = []
-            for i in range(begin, end):
-                if i != 0:
-                    n = x / i
-                    if n + i == b:
-                        #print("POS 13")
-                        return (i,n)
+            if x > 0:
+                begin = -x-1
+                end = x + 1
+                for i in range(begin, end):
+                    #print("POS 20")
+                    if i != 0:
+                        #print("POS 21")
+                        n = x / i
+                        if n + i == b:
+                            #print("POS 13")
+                            return (i,n)
+            else:
+                begin = x-1
+                end = -x + 1
+                for i in range(begin, end):
+                    #print("POS 22")
+                    if i != 0:
+                        #print("POS 23")
+                        n = x / i
+                        if n + i == b:
+                            return (i,n)
                 
 
 
@@ -187,6 +206,5 @@ def main():
     answer = solutions(a,b,c)
     return answer
 
-print( main() )
-
-# PRINT OUT DATA ALONG THE SOLVING PROCESS TO CONFIRM IT, VALUES 12,54,23
+while True:
+    print(main())
